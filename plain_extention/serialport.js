@@ -16,12 +16,10 @@ function connectToPath(){
             document.getElementById('textarea_conection').value = JSON.stringify(connectionInfo)
             chrome.serial.onReceive.addListener(function(info){
                 console.log('onRecieve',info)
-                var buffer = info.data
-                var dataView = new DataView(buffer)
-                var int8View = new Int8Array(buffer)
-                dataView.setInt32(0, 0x1234ABCD)
-                var dataJson = {'1': dataView.getInt32(0).toString(16) ,'2': dataView.getInt8(0).toString(16),'3': int8View[0].toString(16)}
-                document.getElementById('textarea_conection_data').value = JSON.stringify(dataJson)
+                //var uint8array = new TextEncoder().encode(string);
+                var string = new TextDecoder(encoding).decode(info.data);
+                console.log('string',string)
+                document.getElementById('textarea_conection_data').value = JSON.stringify(string)
                 
                 
                 
