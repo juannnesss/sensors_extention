@@ -1,13 +1,18 @@
 
-document.getElementById('click').addEventListener('click',click)
+document.getElementById('click').addEventListener('click',connectToPath)
+var path = document.getElementById('device_input').value
+console.log('serials script')
 
-function click(){
-    console.log('serialPort')
-    chrome.serial.getDevices(function(connectionInfos){
-        console.log('connectionInfos',connectionInfos)
-    })
-    let path ='/dev/cu.usbserial-14610'
-    chrome.serial.connect(path,function (connectionInfo){
-    console.log('hello',connectionInfo)
-    })
+function connectToPath(){
+    var pth = document.getElementById('device_input').value
+    console.log('serialPort',pth)
+    //chrome.serial.getDevices(function(connectionInfos){
+    //    console.log('connectionInfos',connectionInfos)
+    //})
+    
+    chrome.serial.connect(pth,{receiveTimeout:10000},
+        function( connectionInfo) {
+            console.log('Cnection info',connectionInfo)
+            document.getElementById('textarea_conection').value = JSON.stringify(connectionInfo)
+        })
 }
