@@ -14,5 +14,9 @@ function connectToPath(){
         function( connectionInfo) {
             console.log('Cnection info',connectionInfo)
             document.getElementById('textarea_conection').value = JSON.stringify(connectionInfo)
+            chrome.serial.onReceive.addListener(function(info){
+                console.log('onRecieve',info)
+                document.getElementById('textarea_conection_data').value = JSON.stringify(info)
+            })
         })
 }
